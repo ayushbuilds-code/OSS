@@ -4,7 +4,7 @@ import { Users } from "lucide-react";
 
 export function FloatingWhatsappButton() {
   return (
-    <div className="fixed bottom-16 md:bottom-6 right-4 md:right-6 z-40">
+    <div className="fixed bottom-16 md:bottom-6 right-4 sm:right-6 md:right-8 z-40">
       <motion.a
         href={WHATSAPP_COMMUNITY_URL}
         target="_blank"
@@ -12,9 +12,9 @@ export function FloatingWhatsappButton() {
         aria-label="Join our WhatsApp Community"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.08 }}
+        whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.95 }}
-        className="group relative flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white p-3.5 md:px-4 md:py-3 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_28px_rgba(37,211,102,0.65)] transition-all duration-300 font-medium"
+        className="group relative flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white p-3 md:px-4 md:py-3 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_28px_rgba(37,211,102,0.65)] transition-all duration-300 font-medium origin-bottom-right"
       >
         {/* Pulse ring animation */}
         <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-25 pointer-events-none" />

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { Variants } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -62,6 +62,7 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function Home() {
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
 
   // Animation for staggered text reveal
   const textRevealVariants: Variants = {
@@ -83,9 +84,9 @@ export default function Home() {
     <div className="flex flex-col gap-24 pb-24">
       {/* Animated Glowing Orbs Background */}
       <div className="absolute top-0 left-0 w-full h-[600px] overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/40 mix-blend-multiply dark:mix-blend-screen dark:bg-purple-600/30 blur-[120px] animate-pulse" />
-        <div className="absolute top-[20%] right-[-5%] w-[35%] h-[35%] rounded-full bg-cyan-400/50 mix-blend-multiply dark:mix-blend-screen dark:bg-cyan-600/30 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-[40%] left-[20%] w-[30%] h-[30%] rounded-full bg-pink-400/40 mix-blend-multiply dark:mix-blend-screen dark:bg-pink-600/20 blur-[100px] animate-pulse" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/30 mix-blend-multiply dark:mix-blend-screen dark:bg-purple-600/25 blur-[120px] animate-pulse" />
+        <div className="absolute top-[20%] right-[-5%] w-[35%] h-[35%] rounded-full bg-cyan-400/40 mix-blend-multiply dark:mix-blend-screen dark:bg-cyan-600/25 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-[40%] left-[20%] w-[30%] h-[30%] rounded-full bg-emerald-400/30 mix-blend-multiply dark:mix-blend-screen dark:bg-emerald-600/20 blur-[100px] animate-pulse" style={{ animationDelay: '4s' }} />
       </div>
 
       {/* 1. Hero */}
@@ -96,17 +97,15 @@ export default function Home() {
           initial="hidden"
           animate="visible"
         >
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-sm flex flex-wrap justify-center lg:justify-start gap-x-4 gap-y-2">
-            {heroHeadline.map((word, index) => (
-              <span key={index} className="overflow-hidden inline-block pb-2">
-                <motion.span 
-                  variants={textRevealVariants}
-                  className="inline-block bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 dark:from-pink-500 dark:via-purple-500 dark:to-cyan-500 bg-clip-text text-transparent"
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-sm font-heading flex flex-wrap justify-center lg:justify-start gap-x-4 gap-y-2">
+            <span className="overflow-hidden inline-block pb-2">
+              <motion.span 
+                variants={textRevealVariants}
+                className="inline-block bg-gradient-to-r from-[var(--hero-green,#3fb950)] via-[var(--hero-blue,#38bdf8)] to-[var(--hero-purple,#a371f7)] bg-clip-text text-transparent"
+              >
+                Make your first open-source contribution
+              </motion.span>
+            </span>
           </h1>
           <motion.p 
             variants={textRevealVariants}
@@ -120,7 +119,7 @@ export default function Home() {
           >
             <ShinyButton 
               onClick={() => navigate("/learn")} 
-              className="bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8 text-lg font-medium rounded-full transform transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/25"
+              className="bg-white text-zinc-950 dark:bg-white dark:text-black hover:bg-white/95 h-12 px-8 text-base font-semibold rounded-full transform transition-all hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(63,185,80,0.35)] hover:shadow-[0_0_35px_rgba(63,185,80,0.55)] border border-emerald-500/30"
             >
               Start the journey
             </ShinyButton>
@@ -128,72 +127,179 @@ export default function Home() {
               size="lg" 
               variant="outline" 
               onClick={() => navigate("/lab")} 
-              className="rounded-full px-8 h-12 text-lg font-medium transform transition-transform hover:scale-105 hover:bg-foreground hover:text-background active:scale-95"
+              className="rounded-full px-8 h-12 text-base font-mono font-medium transform transition-all hover:scale-105 hover:bg-foreground hover:text-background active:scale-95 border-border/80"
             >
               Try the terminal
             </Button>
           </motion.div>
+          {/* Hint text below buttons */}
+          <motion.div
+            variants={textRevealVariants}
+            className="flex items-center justify-center lg:justify-start gap-2 text-sm text-muted-foreground pt-1"
+          >
+            <span>Free</span>
+            <span className="text-muted-foreground/50">•</span>
+            <span>No setup</span>
+            <span className="text-muted-foreground/50">•</span>
+            <span className="text-[var(--hero-green,#3fb950)] font-medium font-mono">Practise Git in your browser</span>
+          </motion.div>
         </motion.div>
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1, type: "spring", bounce: 0.4 }}
-          className="flex-1 w-full max-w-lg lg:max-w-none relative aspect-square lg:aspect-video bg-gradient-to-br from-gray-100 to-white dark:from-gray-900 dark:to-black rounded-3xl border border-purple-500/30 shadow-[0_0_40px_-10px_rgba(168,85,247,0.4)] overflow-hidden flex items-center justify-center group"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
+          className="flex-1 w-full max-w-lg lg:max-w-none relative aspect-[4/3] lg:aspect-video bg-[#0c1017] dark:bg-[#070b12] rounded-3xl border border-emerald-500/25 shadow-[0_0_50px_-10px_rgba(63,185,80,0.3)] overflow-hidden flex items-center justify-center group"
         >
-          <GridBeam className="opacity-60 transition-opacity duration-700 group-hover:opacity-100" />
-          {/* Decorative mini Git Graph Hero Animation */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
-             <motion.svg className="w-full h-full" viewBox="0 0 400 300">
-               <motion.path 
-                 d="M 50 250 L 50 150 C 50 100, 150 100, 150 50 L 350 50" 
-                 fill="transparent" 
-                 stroke="url(#gradient)" 
-                 strokeWidth="6" 
-                 strokeDasharray="10 10"
-                 className="opacity-80"
-                 initial={{ pathLength: 0 }}
-                 animate={{ pathLength: 1 }}
-                 transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
-               />
+          <GridBeam className="opacity-30 transition-opacity duration-700 group-hover:opacity-60" />
+          
+          {/* Top-left terminal icon badge */}
+          <div className="absolute top-5 left-5 z-20 flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-900/90 border border-emerald-500/40 text-[var(--hero-green,#3fb950)] font-mono font-bold text-lg select-none backdrop-blur-md shadow-md shadow-emerald-950/40">
+            &gt;_
+          </div>
+
+          {/* Bottom-right book icon badge */}
+          <div className="absolute bottom-5 right-5 z-20 flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/90 border border-teal-500/40 text-teal-400 select-none backdrop-blur-md shadow-md shadow-teal-950/40">
+            <BookOpen className="w-6 h-6 stroke-[1.5]" />
+          </div>
+
+          {/* Mini Git Graph Hero Animation */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 p-6 pointer-events-none">
+             <svg className="w-full h-full max-w-[480px] max-h-[300px]" viewBox="0 0 480 300">
                <defs>
-                 <linearGradient id="gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                   <stop offset="0%" stopColor="#ec4899" />
-                   <stop offset="50%" stopColor="#a855f7" />
-                   <stop offset="100%" stopColor="#06b6d4" />
+                 <linearGradient id="hero-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                   <stop offset="0%" stopColor="var(--hero-green, #3fb950)" />
+                   <stop offset="35%" stopColor="var(--hero-teal, #2dd4bf)" />
+                   <stop offset="70%" stopColor="var(--hero-blue, #38bdf8)" />
+                   <stop offset="100%" stopColor="var(--hero-purple, #a371f7)" />
                  </linearGradient>
                </defs>
-               
-               <motion.circle cx="50" cy="250" r="12" className="fill-pink-500" 
-                 initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5, type: "spring" }} 
-                 whileHover={{ scale: 1.5 }}
+
+               {/* Glowing blurred background line */}
+               <path 
+                 d="M 90 230 L 90 130 C 90 75, 125 75, 175 75 L 400 75" 
+                 fill="none" 
+                 stroke="url(#hero-gradient)" 
+                 strokeWidth="10" 
+                 strokeLinecap="round"
+                 className="opacity-40 blur-xs"
                />
-               <motion.circle cx="50" cy="150" r="12" className="fill-purple-500" 
-                 initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1, type: "spring" }} 
+
+               {/* Main journey path */}
+               <motion.path 
+                 d="M 90 230 L 90 130 C 90 75, 125 75, 175 75 L 400 75" 
+                 fill="none" 
+                 stroke="url(#hero-gradient)" 
+                 strokeWidth="5" 
+                 strokeLinecap="round"
+                 initial={{ pathLength: shouldReduceMotion ? 1 : 0 }}
+                 animate={{ pathLength: 1 }}
+                 transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
                />
-               <motion.circle cx="150" cy="50" r="12" className="fill-cyan-500" 
-                 initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.5, type: "spring" }} 
+
+               {/* Node 1: Fork */}
+               <motion.circle 
+                 cx="90" 
+                 cy="230" 
+                 r="12" 
+                 fill="var(--hero-green, #3fb950)"
+                 className="drop-shadow-[0_0_8px_rgba(63,185,80,0.6)]"
+                 initial={{ scale: shouldReduceMotion ? 1 : 0 }} 
+                 animate={{ scale: 1 }} 
+                 transition={{ delay: shouldReduceMotion ? 0 : 0.3, type: "spring" }} 
                />
-               <motion.circle cx="350" cy="50" r="12" className="fill-green-400" 
-                 initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 2, type: "spring" }} 
+               <motion.text
+                 x="112"
+                 y="235"
+                 className="font-mono text-xs font-medium fill-slate-200 select-none"
+                 initial={{ opacity: shouldReduceMotion ? 1 : 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ delay: shouldReduceMotion ? 0 : 0.4 }}
+               >
+                 1 Fork
+               </motion.text>
+
+               {/* Animated / static white indicator dot */}
+               {shouldReduceMotion ? (
+                 <circle cx="90" cy="180" r="4" fill="#ffffff" className="drop-shadow-[0_0_6px_rgba(255,255,255,0.9)]" />
+               ) : (
+                 <circle r="4" fill="#ffffff" className="drop-shadow-[0_0_6px_rgba(255,255,255,1)]">
+                   <animateMotion 
+                     path="M 90 230 L 90 130 C 90 75, 125 75, 175 75 L 400 75" 
+                     dur="6s" 
+                     repeatCount="indefinite" 
+                   />
+                 </circle>
+               )}
+
+               {/* Node 2: Branch & commit */}
+               <motion.circle 
+                 cx="90" 
+                 cy="145" 
+                 r="12" 
+                 fill="var(--hero-teal, #2dd4bf)"
+                 className="drop-shadow-[0_0_8px_rgba(45,212,191,0.6)]"
+                 initial={{ scale: shouldReduceMotion ? 1 : 0 }} 
+                 animate={{ scale: 1 }} 
+                 transition={{ delay: shouldReduceMotion ? 0 : 0.6, type: "spring" }} 
                />
-             </motion.svg>
+               <motion.text
+                 x="112"
+                 y="150"
+                 className="font-mono text-xs font-medium fill-slate-200 select-none"
+                 initial={{ opacity: shouldReduceMotion ? 1 : 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ delay: shouldReduceMotion ? 0 : 0.7 }}
+               >
+                 2 Branch &amp; commit
+               </motion.text>
+
+               {/* Node 3: Open PR */}
+               <motion.circle 
+                 cx="180" 
+                 cy="75" 
+                 r="12" 
+                 fill="var(--hero-blue, #38bdf8)"
+                 className="drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"
+                 initial={{ scale: shouldReduceMotion ? 1 : 0 }} 
+                 animate={{ scale: 1 }} 
+                 transition={{ delay: shouldReduceMotion ? 0 : 0.9, type: "spring" }} 
+               />
+               <motion.text
+                 x="180"
+                 y="50"
+                 textAnchor="middle"
+                 className="font-mono text-xs font-medium fill-slate-200 select-none"
+                 initial={{ opacity: shouldReduceMotion ? 1 : 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ delay: shouldReduceMotion ? 0 : 1.0 }}
+               >
+                 3 Open PR
+               </motion.text>
+
+               {/* Node 4: Merged */}
+               <motion.circle 
+                 cx="400" 
+                 cy="75" 
+                 r="12" 
+                 fill="var(--hero-purple, #a371f7)"
+                 className="drop-shadow-[0_0_8px_rgba(163,113,247,0.6)]"
+                 initial={{ scale: shouldReduceMotion ? 1 : 0 }} 
+                 animate={{ scale: 1 }} 
+                 transition={{ delay: shouldReduceMotion ? 0 : 1.2, type: "spring" }} 
+               />
+               <motion.text
+                 x="400"
+                 y="50"
+                 textAnchor="middle"
+                 className="font-mono text-xs font-medium fill-purple-300 select-none"
+                 initial={{ opacity: shouldReduceMotion ? 1 : 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ delay: shouldReduceMotion ? 0 : 1.3 }}
+               >
+                 4 Merged
+               </motion.text>
+             </svg>
           </div>
-          
-          {/* Floating animated elements */}
-          <motion.div 
-            className="absolute top-10 left-10 w-16 h-16 bg-pink-500/10 rounded-xl backdrop-blur-xl border border-pink-500/30 flex items-center justify-center text-pink-500"
-            animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <TerminalSquare />
-          </motion.div>
-          <motion.div 
-            className="absolute bottom-10 right-10 w-20 h-20 bg-cyan-500/10 rounded-full backdrop-blur-xl border border-cyan-500/30 flex items-center justify-center text-cyan-500"
-            animate={{ y: [0, 30, 0], rotate: [0, -20, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          >
-            <BookOpen />
-          </motion.div>
         </motion.div>
       </section>
 

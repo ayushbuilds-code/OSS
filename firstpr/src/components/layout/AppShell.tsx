@@ -8,21 +8,63 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { WhatsappIcon, WHATSAPP_COMMUNITY_URL } from "@/components/icons/WhatsappIcon";
 import { FloatingWhatsappButton } from "@/components/community/FloatingWhatsappButton";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 function ThemeToggle() {
   const { theme, setTheme } = usePrefs();
 
   return (
-    <div className="flex gap-2">
-      <Button variant={theme === 'light' ? 'default' : 'ghost'} size="icon" onClick={() => setTheme('light')}>
-        <Sun className="h-4 w-4" />
-      </Button>
-      <Button variant={theme === 'dark' ? 'default' : 'ghost'} size="icon" onClick={() => setTheme('dark')}>
-        <Moon className="h-4 w-4" />
-      </Button>
-      <Button variant={theme === 'system' ? 'default' : 'ghost'} size="icon" onClick={() => setTheme('system')}>
-        <Monitor className="h-4 w-4" />
-      </Button>
+    <div className="flex gap-1" role="group" aria-label="Theme mode">
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              variant={theme === 'light' ? 'default' : 'ghost'}
+              size="icon"
+              onClick={() => setTheme('light')}
+              aria-label="Light mode"
+              title="Light mode"
+            />
+          }
+        >
+          <Sun className="h-4 w-4" />
+        </TooltipTrigger>
+        <TooltipContent>Light mode</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              variant={theme === 'dark' ? 'default' : 'ghost'}
+              size="icon"
+              onClick={() => setTheme('dark')}
+              aria-label="Dark mode"
+              title="Dark mode"
+            />
+          }
+        >
+          <Moon className="h-4 w-4" />
+        </TooltipTrigger>
+        <TooltipContent>Dark mode</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              variant={theme === 'system' ? 'default' : 'ghost'}
+              size="icon"
+              onClick={() => setTheme('system')}
+              aria-label="System mode"
+              title="System mode"
+            />
+          }
+        >
+          <Monitor className="h-4 w-4" />
+        </TooltipTrigger>
+        <TooltipContent>System mode</TooltipContent>
+      </Tooltip>
     </div>
   );
 }
@@ -82,7 +124,7 @@ export function AppShell() {
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" className="hidden md:flex relative h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64" onClick={() => setOpen(true)}>
-              <span className="hidden lg:inline-flex">Search documentation...</span>
+              <span className="hidden lg:inline-flex">Search lessons, commands, issues...</span>
               <span className="inline-flex lg:hidden">Search...</span>
               <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
                 <span className="text-xs">⌘</span>K

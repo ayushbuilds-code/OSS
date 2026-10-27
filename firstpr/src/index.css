@@ -24,7 +24,12 @@
   --color-ring: #FFFFFF;
 
   --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --color-hero-green: var(--hero-green);
+  --color-hero-teal: var(--hero-teal);
+  --color-hero-blue: var(--hero-blue);
+  --color-hero-purple: var(--hero-purple);
 }
 
 @layer base {
@@ -44,6 +49,9 @@
   html {
     @apply font-sans;
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
 }
 
 @layer utilities {
@@ -55,7 +63,7 @@
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
+  --font-heading: 'Space Grotesk', sans-serif;
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -131,6 +139,12 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
+  /* GitHub PR Hero Theme Tokens (#3fb950 open PR green -> #a371f7 merged PR purple) */
+  --hero-green: #3fb950;
+  --hero-teal: #2dd4bf;
+  --hero-blue: #38bdf8;
+  --hero-purple: #a371f7;
+
   /* Scene Theme Tokens (Light) */
   --scene-bg: #f8fafc;
   --scene-surface: #ffffff;
@@ -197,6 +211,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* GitHub PR Hero Theme Tokens (#3fb950 open PR green -> #a371f7 merged PR purple) */
+  --hero-green: #3fb950;
+  --hero-teal: #2dd4bf;
+  --hero-blue: #38bdf8;
+  --hero-purple: #a371f7;
 
   /* Scene Theme Tokens (Dark) */
   --scene-bg: #020617;

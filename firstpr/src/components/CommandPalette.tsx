@@ -37,7 +37,7 @@ export function CommandPalette() {
 
   return (
     <CommandDialog open={isOpen} onOpenChange={setOpen}>
-      <CommandInput placeholder="Type a command or search modules..." />
+      <CommandInput placeholder="Search lessons, commands, issues..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Navigation">
